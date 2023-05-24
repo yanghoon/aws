@@ -63,3 +63,34 @@
 * Each read/write take 1 ticket
 * max(vCore x2, 128)
 * Queued query is not monitored as Slow Query
+
+### Internal Architecture
+
+* MQL Engine (Handler + Cloud Storage Driver)
+* Aurora Architecture
+  * No oplog relay. 6 storeage replication shared (like aurora)
+  * Replication Delay : Only cache invalidate event propergation time \
+   readPreference: primary or secondaryPreferred
+  * ?Insert ACK : 4 or 6 Storage wirte is success
+
+### Scale Out
+**Add Secondary (MongoDB - Hard)**
+* Using LVM Snapshot (official guides)
+* Loss I/O Performance for Snapshot
+
+**Add Secondary (MongoDB - Hard)**
+* Scale-Up instance and Role change
+
+## Query Tuning
+
+### Aggregation Pipe Line
+* `$match` pipeline have to place in the first (with secondary index)
+* `$group`, `$sort` is blocking stage
+  * use same index with `$match`
+  * use `$limit` before blocking stage
+  * placed in the last
+
+### Migration to DocumentDB
+
+* Method 1 : mongodump, mongoresotre
+* Method 2 : using DMS (relay oplog to DocumentDB, like Change Data Capture)
