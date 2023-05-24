@@ -37,8 +37,6 @@
 * Read Cache in front of Dynamo
 * 1 Primary, Max 10 Replica
 
-## Cost Optimization
-
 per-req
 per-gb-storage
 scale-to-zero
@@ -85,5 +83,12 @@ Optimized for storage (SQL)
 * Strong Consistency
 * Not Modified after Creating Parition
 
+## Cost Optimization
 
+* AWS Cost Explorer
+* Single Table, Standard-IA
 
+## Supports
+
+* DynamoDB Immersion Day
+* Database Clinic in A Day (DCAD)
